@@ -1,17 +1,17 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+import RedditContext from '../context/RedditContext';
 
-const Posts = ({ posts }) => (
-  <ul>
-    {posts.map(({ id, title }) => <li key={id}>{title}</li>)}
-  </ul>
+const Posts = () => (
+  <RedditContext.Consumer>
+    {
+      ({ posts }) => (
+        <ul>
+          {posts.map(({ id, title }) => <li key={id}>{title}</li>)}
+        </ul>
+      )
+    }
+  </RedditContext.Consumer>
+  
 );
-
-Posts.propTypes = {
-  posts: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
-};
 
 export default Posts;

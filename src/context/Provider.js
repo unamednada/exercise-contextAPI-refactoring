@@ -14,9 +14,15 @@ class Provider extends React.Component {
         reactjs: {},
       },
     }
+    this.fetchPosts = this.fetchPosts.bind(this);
+    this.shouldFetchPosts = this.shouldFetchPosts.bind(this);
+    this.handleFetchSuccess = this.handleFetchSuccess.bind(this);
+    this.handleFetchError = this.handleFetchError.bind(this);
+    this.handleSubredditChange = this.handleSubredditChange.bind(this);
+    this.handleRefreshSubreddit = this.handleRefreshSubreddit.bind(this);
   }
 
-  componentDidUpdate(_pveProps, prevState) {
+  componentDidUpdate(_prevProps, prevState) {
     const { shouldRefreshSubreddit, selectedSubreddit } = this.state;
     const selectedSubredditChanged = prevState.selectedSubreddit !== selectedSubreddit;
 
@@ -108,7 +114,7 @@ class Provider extends React.Component {
       availableSubreddits: Object.keys(postsBySubreddit),
       posts: postsBySubreddit[selectedSubreddit].items,
     };
-    
+
     return (
       <RedditContext.Provider value={ context }>
         { children }
