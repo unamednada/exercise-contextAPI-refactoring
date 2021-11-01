@@ -50,6 +50,25 @@ class Provider extends React.Component {
     })
   }
 
+  handleFetchError(error) {
+    this.setState((state) => {
+      const newState = {
+        ...state,
+        shouldRefreshSubreddit: false,
+        isFetching: false,
+      }
+
+      newState.postsBySubreddit[state.selectedSubreddit] = {
+        error: error.message,
+        items: [],
+      }
+
+      return newState;
+    })
+  }
+
+  
+
   render() {
     const { children } = this.props;
     const context = {};
