@@ -89,11 +89,26 @@ class Provider extends React.Component {
     })
   }
 
+  handleSubredditChange(selectedSubreddit) {
+    this.setState({ selectedSubreddit });
+  }
 
+  handleRefreshSubreddit() {
+    this.setState({ shouldRefreshSubreddit: true });
+  }
 
   render() {
     const { children } = this.props;
-    const context = {};
+    const { selectedSubreddit, postsBySubreddit } = this.state;
+    const context = {
+      ...this.state,
+      selectSubreddit: this.handleSubredditChange,
+      fetchPosts: this.fetchPosts,
+      refreshSubreddit: this.handleRefreshSubreddit,
+      availableSubreddits: Object.keys(postsBySubreddit),
+      posts: postsBySubreddit[selectedSubreddit].items,
+    };
+    
     return (
       <RedditContext.Provider value={ context }>
         { children }
