@@ -16,6 +16,15 @@ class Provider extends React.Component {
     }
   }
 
+  componentDidUpdate(_pveProps, prevState) {
+    const { shouldRefreshSubreddit, selectedSubreddit } = this.state;
+    const selectedSubredditChanged = prevState.selectedSubreddit !== selectedSubreddit;
+
+    if (selectedSubredditChanged || shouldRefreshSubreddit ) {
+      this.fetchPosts();
+    }
+  }
+
   fetchPosts() {
     if (!this.shouldFetchPosts()) return;
 
