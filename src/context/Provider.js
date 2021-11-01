@@ -16,6 +16,19 @@ class Provider extends React.Component {
     }
   }
 
+  fetchPosts() {
+    if (!this.shouldFetchPosts()) return;
+
+    this.setState({
+      shouldRefreshSubreddit: false,
+      isFetching: true,
+    });
+
+    const { selectedSubreddit } = this.state;
+    getPostsBySubreddit(selectedSubreddit)
+      .then(this.handleFetchSuccess, this.handleFetchError);
+  }
+
   shouldFetchPosts() {
     const {
       selectedSubreddit,
@@ -67,7 +80,7 @@ class Provider extends React.Component {
     })
   }
 
-  
+
 
   render() {
     const { children } = this.props;
